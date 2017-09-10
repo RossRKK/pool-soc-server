@@ -1,4 +1,4 @@
-package poolsoc.server.viewmodels;
+package poolsoc.server.viewmodel;
 
 public class GreetingVM {
 

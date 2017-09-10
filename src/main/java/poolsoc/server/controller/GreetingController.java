@@ -1,4 +1,4 @@
-package poolsoc.server.controllers;
+package poolsoc.server.controller;
 
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import poolsoc.server.viewmodels.*;
+import poolsoc.server.viewmodel.*;
 
 @RestController
 public class GreetingController {

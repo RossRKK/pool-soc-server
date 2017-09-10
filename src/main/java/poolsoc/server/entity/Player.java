@@ -1,4 +1,4 @@
-package poolsoc.server.entities;
+package poolsoc.server.entity;
 
 public class Player extends TournamentNode {
 	public Player () {

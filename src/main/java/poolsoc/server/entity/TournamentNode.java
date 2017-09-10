@@ -1,4 +1,4 @@
-package poolsoc.server.entities;
+package poolsoc.server.entity;
 
 public abstract class TournamentNode {
 	protected Player contestant;
