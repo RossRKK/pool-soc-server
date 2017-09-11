@@ -12,12 +12,12 @@ public class Match extends TournamentNode {
 	private Date scheduledTime;
 	
 	@Override
-	public Player getContestant() {
+	public Player determineContestant() {
 		//return the winner
 		if (score1 > score2) {
-			return contestant1.getContestant();
+			return contestant1.determineContestant();
 		} else if (score2 > score1) {
-			return contestant2.getContestant();
+			return contestant2.determineContestant();
 		} else {		
 			return null;
 		}

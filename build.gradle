@@ -13,7 +13,7 @@ apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
 
 jar {
-    baseName = 'gs-rest-service'
+    baseName = 'pool-soc-server'
     version =  '0.1.0'
 }
 
@@ -25,7 +25,16 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 dependencies {
+	compile("org.springframework.boot:spring-boot-devtools")
     compile("org.springframework.boot:spring-boot-starter-web")
     compile("org.springframework.boot:spring-boot-starter-thymeleaf")
     compile("com.fasterxml.jackson.core:jackson-databind")
+}
+
+bootRun {
+    addResources = true
+}
+
+bootRepackage {
+    mainClass = 'poolsoc.server.Application'
 }

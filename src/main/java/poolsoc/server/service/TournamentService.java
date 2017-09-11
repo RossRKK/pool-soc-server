@@ -27,10 +27,8 @@ public class TournamentService {
         ObjectMapper objectMapper = new ObjectMapper();
         File file = new File(id + ".json");
         
-        System.out.println(file.getAbsolutePath());
-        
     	Tournament t = objectMapper.readValue(file, Tournament.class);
-
+    	
         return t;
 	}
 }

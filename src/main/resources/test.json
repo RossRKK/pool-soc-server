@@ -1,0 +1,17 @@
+{
+  "name":"Test Tournament",
+  "finalMatch": {
+    "@type":"match",
+    "contestant1": {
+      "@type":"player",
+      "name": "Ross"
+    },
+  	"contestant2": {
+      "@type":"player",
+      "name": "Will"
+    },
+  	"score1": 0,
+  	"score2": 0,
+  	"scheduledTime": "2017-09-11"
+  }
+}

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import poolsoc.server.entity.Tournament;
 import poolsoc.server.service.TournamentService;
+import poolsoc.server.viewmodel.TournamentVM;
 
 @RestController
 @RequestMapping("api/tournament")
@@ -16,8 +17,8 @@ public class TournamentController {
 	TournamentService ts = new TournamentService();
 	
 	@RequestMapping(method = RequestMethod.GET, path ="{id}")
-	public Tournament get(@PathVariable String id) throws IOException {
-		return ts.getTournament(id);
+	public TournamentVM get(@PathVariable String id) throws IOException {
+		return new TournamentVM(ts.getTournament(id));
 	}
 	
 	@RequestMapping(method = RequestMethod.PUT)

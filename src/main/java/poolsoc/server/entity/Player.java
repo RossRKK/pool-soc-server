@@ -1,7 +1,18 @@
 package poolsoc.server.entity;
 
 public class Player extends TournamentNode {
-	public Player () {
-		this.contestant = this;
+	private String name;
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	@Override
+	public Player determineContestant() {
+		return this;
 	}
 }
