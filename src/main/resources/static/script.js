@@ -9,3 +9,11 @@ var Server = {
      });
    }
  }
+
+function loadContent(page) {
+     document.getElementById("body").innerHTML="<object type=\"text/html\" data=" + page + "></object>";
+}
+
+$(document).ready(function () {
+  //do stuff
+});
