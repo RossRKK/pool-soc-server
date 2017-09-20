@@ -6,6 +6,7 @@ body {
 object {
   width: 100%;
   height: 100%;
+  max-height: 800px;
 }
 
 #page {
@@ -13,7 +14,7 @@ object {
   padding: 0.5rem;
   margin: 0.8rem;
   text-align: center;
-  max-width: 800px;
+  max-width: 1000px;
   width: 100%;
   display: inline-block;
 }

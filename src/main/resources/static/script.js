@@ -11,7 +11,10 @@ var Server = {
  }
 
 function loadContent(page) {
-     document.getElementById("body").innerHTML="<object type=\"text/html\" data=" + page + "></object>";
+     //document.getElementById("body").innerHTML="<object type=\"text/html\" data=" + page + "></object>";
+     //the jquery way doesn't load the scripts but loads the content without a weird wrapper thing
+     //the object tag was like an iframe
+     $("#body").load(page, Killer.load);
 }
 
 $(document).ready(function () {
