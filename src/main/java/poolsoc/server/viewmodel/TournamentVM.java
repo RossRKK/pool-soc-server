@@ -11,7 +11,7 @@ public class TournamentVM {
 	
 	private TournamentNodeVM finalMatch;
 	private String name;
-
+	private String id;
 	
 	/*Getters and Setters*/
 	public TournamentNodeVM getFinalMatch() {
@@ -25,5 +25,11 @@ public class TournamentVM {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
 	}
 }
