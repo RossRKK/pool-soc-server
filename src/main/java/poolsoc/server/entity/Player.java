@@ -2,6 +2,10 @@ package poolsoc.server.entity;
 
 public class Player extends TournamentNode {
 	private String name;
+	
+	public Player() {
+		super();
+	}
 
 	public String getName() {
 		return name;

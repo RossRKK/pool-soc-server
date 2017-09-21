@@ -22,6 +22,16 @@ public class TournamentService {
 	//keep a buffer of tournaments in memory
 	HashMap<String, Tournament> tournaments = new HashMap<String, Tournament>();
 	
+	/**
+	 * Get a list of all available tournaments.
+	 * @return The list of all available tournaments
+	 */
+	public String[] getAll() {
+		File dir = new File(PATH);
+		
+		return dir.list();
+	}
+	
 	//get a tournament from its id
 	public Tournament getTournament(String id) throws IOException {
 		if (tournaments.containsKey(id)) {

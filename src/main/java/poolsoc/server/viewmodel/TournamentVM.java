@@ -5,6 +5,7 @@ import poolsoc.server.entity.Tournament;
 public class TournamentVM {
 	
 	public TournamentVM(Tournament t) {
+		this.id = t.getId();
 		this.name = t.getName();
 		this.finalMatch = TournamentNodeVM.instantiate(t.getFinalMatch());
 	}

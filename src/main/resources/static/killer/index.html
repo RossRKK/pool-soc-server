@@ -3,10 +3,10 @@
 		<title>Killer</title>
 	</head>
 	<body>
-	<div class="container">
+	<div>
 		<h1>Killer</h1>
 		<p><h2>Rules</h2><span id="rulesTitle">(expand)</span></p>
-		<div class="container" id="rules">
+		<div id="rules">
 			<p>In killer each player is given a certain number of lives (normally 3).</p>
 			<p>Enter the name of each player in the "Add Player" section. Once you have entered the name of each player press start.</p>
 			<p>Every turn a player is randomly picked from the "To Be Drawn" list, this player must then take a shot.</p>
@@ -26,7 +26,7 @@
 			<p>The winner is the last player standing</p>
 		</div>
 
-		<div id="curDraw" class="container">
+		<div id="curDraw">
 			<div id="player"></div>
 			<button class="btn btn-default" onclick="Killer.pot()">Pot</button>
 			<button class="btn btn-default" onclick="Killer.miss()">Miss</button>
@@ -40,7 +40,7 @@
 			<form id="addPlayer">No. Lives: <input class="form-control" type="number" id="noLives" value = "3"></input> Name: <input type="text" class="form-control" id="add"/><button  class="btn btn-default" type = "submit" >Add</button></form>
 		</div>
 
-		<div id="players" class="container"></div>
+		<div id="players"></div>
 	</div>
 	</body>
 </html>

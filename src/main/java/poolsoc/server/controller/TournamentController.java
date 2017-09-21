@@ -2,6 +2,7 @@ package poolsoc.server.controller;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,6 +22,11 @@ import poolsoc.server.viewmodel.TournamentVM;
 public class TournamentController {
 	TournamentService ts = new TournamentService();
 	
+	@RequestMapping(method = RequestMethod.GET, path = "")
+	public String[] getAll() {
+		return ts.getAll();
+	}
+	
 	@RequestMapping(method = RequestMethod.GET, path ="{id}")
 	public TournamentVM get(@PathVariable String id) throws IOException {
 		return new TournamentVM(ts.getTournament(id));
@@ -32,11 +38,11 @@ public class TournamentController {
 	}
 	
 	@RequestMapping(path = "create")
-	public TournamentVM generate(@RequestBody List<String> draw, String name, String id, boolean redraw) throws JsonGenerationException, JsonMappingException, IOException {
+	public TournamentVM generate(@RequestBody List<String> draw, String name, boolean redraw) throws JsonGenerationException, JsonMappingException, IOException {
 		Tournament t = ts.generateTorunament(draw, redraw);
 		
 		t.setName(name);
-		t.setId(id);
+		t.setId(UUID.randomUUID().toString());
 		
 		ts.saveTournament(t);
 		

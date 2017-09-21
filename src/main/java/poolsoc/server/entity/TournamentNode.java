@@ -1,5 +1,7 @@
 package poolsoc.server.entity;
 
+import java.util.UUID;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -12,25 +14,20 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
     @JsonSubTypes.Type(value = Match.class, name = "match") }
 )
 public abstract class TournamentNode {
-	private static int nextId = 0;
-	private static int nextId() {
-		nextId ++;
-		return nextId;
-	}
 	
 	public TournamentNode() {
-		this.id = nextId();
+		this.id = UUID.randomUUID().toString();
 	}
 	
-	private int id;
+	private String id;
 	
 	public abstract Player determineContestant();
 
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 }

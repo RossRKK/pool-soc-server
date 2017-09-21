@@ -11,6 +11,10 @@ public class Match extends TournamentNode {
 	
 	private Date scheduledTime;
 	
+	public Match() {
+		super();
+	}
+	
 	@Override
 	public Player determineContestant() {
 		//return the winner

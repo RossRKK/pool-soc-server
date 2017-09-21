@@ -7,6 +7,7 @@ import poolsoc.server.entity.Match;
 public class MatchVM extends TournamentNodeVM {
 	
 	public MatchVM (Match m) {
+		super(m);
 		this.contestant1 = TournamentNodeVM.instantiate(m.getContestant1());
 		this.contestant2 = TournamentNodeVM.instantiate(m.getContestant2());
 		this.score1 = m.getScore1();

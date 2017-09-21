@@ -6,13 +6,17 @@ import poolsoc.server.entity.TournamentNode;
 
 public abstract class TournamentNodeVM {
 	
-	private int id;
+	private String id;
+	
+	TournamentNodeVM(TournamentNode tn) {
+		this.id = tn.getId();
+	}
 
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

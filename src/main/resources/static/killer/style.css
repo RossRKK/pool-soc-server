@@ -22,12 +22,3 @@ input[type=text], input[type=number] {
 .player {
 	padding: 0px;
 }
-
-body {
-	font-family: sans-serif;
-	width: 100%;
-}
-
-h1, h2 {
-	font-weight: bold;
-}

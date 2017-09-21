@@ -6,6 +6,7 @@ public class PlayerVM extends TournamentNodeVM {
 	private String name;
 
 	public PlayerVM(Player p) {
+		super(p);
 		this.name = p.getName();
 	}
 
