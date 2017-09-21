@@ -6,15 +6,11 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Stream;
-
-import org.springframework.core.io.Resource;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import poolsoc.server.Application;
 import poolsoc.server.entity.Match;
 import poolsoc.server.entity.Player;
 import poolsoc.server.entity.Tournament;
