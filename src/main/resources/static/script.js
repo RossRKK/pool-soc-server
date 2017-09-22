@@ -38,18 +38,26 @@ var Router = function () {
 }();
 
 var Server = {
-  create: function(name, players) {
-   return $.ajax({
-       url: "/api/tournament/create?name=" + name,
-       method: "POST",
-       contentType: "application/json",
-       data: JSON.stringify(players)
-     });
-   },
-   get: function (id) {
+  Tournament: {
+    create: function(name, players) {
      return $.ajax({
-         url: "/api/tournament/" + id,
-         method: "GET"
+         url: "/api/tournament/create?name=" + name,
+         method: "POST",
+         contentType: "application/json",
+         data: JSON.stringify(players)
        });
+     },
+     get: function (id) {
+       return $.ajax({
+           url: "/api/tournament/" + id,
+           method: "GET"
+         });
+     },
+     getAll: function () {
+       return $.ajax({
+           url: "/api/tournament",
+           method: "GET"
+        });
+     }
    }
  }

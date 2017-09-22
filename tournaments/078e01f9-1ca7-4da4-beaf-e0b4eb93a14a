@@ -1,0 +1,105 @@
+{
+	"finalMatch": {
+		"@type": "match",
+		"id": "8d880748-01ad-4a32-b58e-b666a140154e",
+		"contestant1": {
+			"@type": "match",
+			"id": "909c1132-9d11-4761-a3b8-593195aea39c",
+			"contestant1": {
+				"@type": "match",
+				"id": "109b92af-5110-4252-b9d1-f379324f5a65",
+				"contestant1": {
+					"@type": "match",
+					"id": "41c8633f-15a7-4fb1-b33e-b7d60991507b",
+					"contestant1": {
+						"@type": "player",
+						"id": "5719d47f-eca8-42c0-b829-2de6fc049f60",
+						"name": "Ross"
+					},
+					"contestant2": {
+						"@type": "player",
+						"id": "94be2930-056d-40b5-be86-ae120a179cb5",
+						"name": "Will"
+					},
+					"score1": 1,
+					"score2": 0,
+					"scheduledTime": null
+				},
+				"contestant2": {
+					"@type": "player",
+					"id": "df7d22c7-4570-45f0-8f42-a4ab0d8bf13c",
+					"name": "Elliot"
+				},
+				"score1": 0,
+				"score2": 0,
+				"scheduledTime": null
+			},
+			"contestant2": {
+				"@type": "match",
+				"id": "225fcb69-7b62-4603-bd29-1b708eb3277a",
+				"contestant1": {
+					"@type": "player",
+					"id": "b4e4c99a-f8a7-442b-8238-44e6c2e980c6",
+					"name": "Brandon"
+				},
+				"contestant2": {
+					"@type": "player",
+					"id": "a35e57b7-693b-4051-b594-aefba46d1dd7",
+					"name": "Freddie"
+				},
+				"score1": 0,
+				"score2": 0,
+				"scheduledTime": null
+			},
+			"score1": 0,
+			"score2": 0,
+			"scheduledTime": null
+		},
+		"contestant2": {
+			"@type": "match",
+			"id": "7b40ffa8-3f8c-4691-bee9-56fb46d2361f",
+			"contestant1": {
+				"@type": "match",
+				"id": "f7e74066-158d-4c94-8386-352f080a5ebc",
+				"contestant1": {
+					"@type": "player",
+					"id": "1e8fa6b7-7d05-4a69-ad40-70af838d4683",
+					"name": "Jack"
+				},
+				"contestant2": {
+					"@type": "player",
+					"id": "a87c2720-008a-44a1-97b2-9ed487d7cafa",
+					"name": "Cameron"
+				},
+				"score1": 0,
+				"score2": 0,
+				"scheduledTime": null
+			},
+			"contestant2": {
+				"@type": "match",
+				"id": "99160de0-7e4a-47b8-b3a5-513598eab7d4",
+				"contestant1": {
+					"@type": "player",
+					"id": "5fa33c62-712e-492b-9872-b4b2dd58d716",
+					"name": "Felmmming"
+				},
+				"contestant2": {
+					"@type": "player",
+					"id": "8fa7ab33-1152-4090-af24-a49096a94d65",
+					"name": "Chris"
+				},
+				"score1": 0,
+				"score2": 0,
+				"scheduledTime": null
+			},
+			"score1": 0,
+			"score2": 0,
+			"scheduledTime": null
+		},
+		"score1": 0,
+		"score2": 0,
+		"scheduledTime": null
+	},
+	"name": "Largest",
+	"id": "078e01f9-1ca7-4da4-beaf-e0b4eb93a14a"
+}

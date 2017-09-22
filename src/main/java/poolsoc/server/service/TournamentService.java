@@ -49,7 +49,7 @@ public class TournamentService {
 			directory.mkdirs();
 		}
 		
-		File file = new File(PATH + File.separator + id + ".json");
+		File file = new File(PATH + File.separator + id);
 		
 		if (!file.exists()) {
 			file.createNewFile();

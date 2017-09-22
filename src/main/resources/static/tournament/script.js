@@ -1,28 +1,70 @@
 var Tournament = function() {
+  var tournaments = [];
+
   var tournament;
 
   var init = function () {
     structure.root = document.getElementById("bracket");
+
+    if (tournaments.length === 0) {
+      getAll();
+    }
+    display();
+  }
+
+  var display = function () {
+    structure.root.innerText = "";
+    structure.rounds = [];
+
     if (tournament) {
       loadBracket();
     } else {
-      //structure.root.innerText = "No Tournament Selected";
+      structure.root.innerText = "No Tournament Selected";
     }
   }
 
-  var load = function (id) {
-    Server.get(id).done(function (result) {
-      tournament = result;
-      init();
+  var getAll = function () {
+    Server.Tournament.getAll().done(function (results) {
+      results.forEach(id => tournaments[id] = { id: id });
+      loadAll();
     });
+  }
+
+  var load = function (id) {
+    Server.Tournament.get(id).done(function (result) {
+      tournaments[id] = result;
+      addToSelector(tournaments[id]);
+    });
+  }
+
+  var loadAll = function () {
+    Object.keys(tournaments).forEach(id => load(id));
+  }
+
+  var select = function (id) {
+    tournament = tournaments[id];
+    display();
+  }
+
+  var addToSelector = function (t) {
+    var nav = document.createElement("div");
+    nav.className = "nav-element";
+    nav.innerText = t.name;
+    nav.value = t.id;
+
+    nav.onclick = function (e) {
+      select(e.target.value);
+    }
+
+    document.getElementById("tournament-selector").appendChild(nav);
   }
 
   var determineWinner = function (node) {
     if (node && (node.contestant1 && node.contestant2)) {
       if (node.score1 > node.score2) {
-        return contestant1;
+        return node.contestant1;
       } else if (node.score2 > node.score1) {
-        return contestant2;
+        return node.contestant2;
       } else {
         return null;
       }
@@ -50,6 +92,30 @@ var Tournament = function() {
 
   var loadBracket = function () {
     createNodeChildren(tournament.finalMatch, 0);
+
+    var maxDepth = structure.rounds.length - 1;
+    var expectedSize = Math.pow(2, maxDepth + 1);
+    var actualSize = structure.rounds[maxDepth].children.length;
+    if (actualSize < expectedSize) {
+      var difference = expectedSize - actualSize;
+
+      for (var i = 0; i < difference/2; i++) {
+        //TODO for the love of god fix this
+        var gameSpacerTop = document.createElement("li");
+        gameSpacerTop.innerText = "Fake Player";
+        gameSpacerTop.className = "game game-top";
+
+        var gameSpacerBottom = document.createElement("li");
+        gameSpacerBottom.innerText = "Fake Player"
+        gameSpacerBottom.className = "game game-bottom";
+
+        var spacer = document.createElement("li");
+
+        structure.rounds[maxDepth].appendChild(gameSpacerTop);
+        structure.rounds[maxDepth].appendChild(spacer);
+        structure.rounds[maxDepth].appendChild(gameSpacerBottom);
+      }
+    }
   }
 
   var createNodeChildren = function (node, depth) {
@@ -57,9 +123,6 @@ var Tournament = function() {
       //create the new list
       if (!structure.rounds[depth]) {
         var list = document.createElement("ul");
-
-        var spacer = document.createElement("li");
-        list.appendChild(spacer);
 
         structure.root.insertBefore(list, structure.root.firstChild);
         structure.rounds[depth] = list;

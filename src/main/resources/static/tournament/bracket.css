@@ -13,7 +13,9 @@ ul {
   flex-grow:1;
 }
 
-li:first-child,li:last-child {
+ul:before, ul:after {
+  content: " ";
+  display: inline-block;
   flex-grow:.5;
 }
 
@@ -35,7 +37,8 @@ li:first-child,li:last-child {
 }
 
 .game-top + li {
-  border-right:1px solid #aaa; min-height:40px;
+  border-right:1px solid #aaa;
+  min-height:40px;
 }
 
 .game-bottom {
