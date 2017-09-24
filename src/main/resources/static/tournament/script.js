@@ -9,6 +9,7 @@ var Tournament = function() {
     if (tournaments.length === 0) {
       getAll();
     }
+
     display();
   }
 
@@ -56,7 +57,19 @@ var Tournament = function() {
       select(e.target.value);
     }
 
-    document.getElementById("tournament-selector").appendChild(nav);
+    var selector = document.getElementById("tournament-selector");
+
+    var nextElement = null;
+
+    for (var i = 0; i < selector.children.length; i++) {
+      if (!nextElement) {
+        nextElement = selector.children[i];
+      } else if (nextElement.innerText > t.name) {
+        nextElement = selector.children[i];
+      }
+    }
+
+    selector.insertBefore(nav, nextElement);
   }
 
   var determineWinner = function (node) {
@@ -78,21 +91,23 @@ var Tournament = function() {
       if (node.contestant1 && node.contestant2) {
         return getPlayerName(determineWinner(node));
       } else {
-        return node.name;
+        return node;
       }
     } else {
-      return "TBC";
+      return { name: "TBC" };
     }
   }
 
   var structure = {
     root: null,
-    rounds: []
+    rounds: [],
+    players: []
   }
 
   var loadBracket = function () {
     createNodeChildren(tournament.finalMatch, 0);
 
+    //fill out the prelim round
     var maxDepth = structure.rounds.length - 1;
     var expectedSize = Math.pow(2, maxDepth + 1);
     var actualSize = structure.rounds[maxDepth].children.length;
@@ -100,13 +115,16 @@ var Tournament = function() {
       var difference = expectedSize - actualSize;
 
       for (var i = 0; i < difference/2; i++) {
-        //TODO for the love of god fix this
         var gameSpacerTop = document.createElement("li");
-        gameSpacerTop.innerText = "Fake Player";
-        gameSpacerTop.className = "game game-top";
+
+        var player = structure.players[maxDepth - 1][i + actualSize/3];
+
+        gameSpacerTop.innerText = player.name;
+        gameSpacerTop.className = "game game-top player-" + player.id;
+        structure.players[maxDepth].push(player);
 
         var gameSpacerBottom = document.createElement("li");
-        gameSpacerBottom.innerText = "Fake Player"
+        gameSpacerBottom.innerText = "BYE"
         gameSpacerBottom.className = "game game-bottom";
 
         var spacer = document.createElement("li");
@@ -116,6 +134,20 @@ var Tournament = function() {
         structure.rounds[maxDepth].appendChild(gameSpacerBottom);
       }
     }
+
+    //highlight player names
+    structure.players[maxDepth].forEach((player) => {
+      var playerTags = $(".player-" + player.id);
+
+      playerTags.css("cursor", "default");
+
+      playerTags.on("mouseover", function() {
+        playerTags.css("background-color", "#cccccc");
+      });
+      playerTags.on("mouseleave", function () {
+        playerTags.css("background-color", "white");
+      })
+    })
   }
 
   var createNodeChildren = function (node, depth) {
@@ -126,6 +158,7 @@ var Tournament = function() {
 
         structure.root.insertBefore(list, structure.root.firstChild);
         structure.rounds[depth] = list;
+        structure.players[depth] = [];
       } else {
         var spacer = document.createElement("li");
         structure.rounds[depth].appendChild(spacer);
@@ -141,35 +174,36 @@ var Tournament = function() {
   }
 
   var createNode = function (node, depth) {
+
+    function createPlayerTag(node, score, isTop, depth) {
+      var tag = document.createElement("li");
+      tag.className = isTop ? "game game-top" : "game game-bottom";
+      var displayNode = getPlayerName(node)
+      tag.innerText = displayNode.name;
+      if (displayNode.id) {
+        tag.className += " player-" + displayNode.id;
+      }
+      structure.players[depth].push(displayNode);
+
+      var tagScore = document.createElement("span");
+      tagScore.innerText = score;
+
+      tag.appendChild(tagScore);
+
+      structure.rounds[depth].appendChild(tag);
+    }
+
     /*<li class="game game-top winner">Lousville <span>79</span></li>
 		<li class="game game-spacer">&nbsp;</li>
 		<li class="game game-bottom ">NC A&T <span>48</span></li>*/
-    var top = document.createElement("li");
-    top.className = "game game-top";
-    top.innerText = getPlayerName(node.contestant1);
-
-    var topScore = document.createElement("span");
-    topScore.innerText = node.score1;
-
-    top.appendChild(topScore);
-
-    structure.rounds[depth].appendChild(top);
+    createPlayerTag(node.contestant1, node.score1, true, depth);
 
     var spacer = document.createElement("li");
     spacer.innerHtml = "&nbsp";
 
     structure.rounds[depth].appendChild(spacer);
 
-    var bottom = document.createElement("li");
-    bottom.className = "game game-bottom";
-    bottom.innerText = getPlayerName(node.contestant2);
-
-    var bottomScore = document.createElement("span");
-    bottomScore.innerText = node.score2;
-
-    bottom.appendChild(bottomScore);
-
-    structure.rounds[depth].appendChild(bottom);
+    createPlayerTag(node.contestant2, node.score2, false, depth);
   }
 
   return {
