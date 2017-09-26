@@ -1,6 +1,6 @@
 var Tournament = function() {
   var tournaments = [];
-
+  var selectedId = null;
   var tournament;
 
   var init = function () {
@@ -35,6 +35,10 @@ var Tournament = function() {
 
   var select = function (id) {
     tournament = tournaments[id];
+    selectedId = id;
+    structure.nodes = [];
+    structure.rounds = [];
+    structure.players = [];
     display();
   }
 
@@ -92,10 +96,12 @@ var Tournament = function() {
   var structure = {
     root: null,
     rounds: [],
-    players: []
+    players: [],
+    nodes: []
   }
 
   var loadBracket = function () {
+    structure.nodes[tournament.finalMatch.id] = tournament.finalMatch;
     createNodeChildren(tournament.finalMatch, 0);
 
     //fill out the prelim round
@@ -165,8 +171,36 @@ var Tournament = function() {
   }
 
   var createNode = function (node, depth) {
+    function createTagScore(score, isTop, parentNode) {
+      var tagScore = document.createElement("span");
+      tagScore.innerText = score;
+      tagScore.contentEditable = "true";
 
-    function createPlayerTag(node, score, isTop, depth) {
+      tagScore.value = parentNode.id;
+      $(tagScore).on("keydown", function (e) {
+        if (e.keyCode === 13) {
+          e.preventDefault();
+          var node = structure.nodes[e.currentTarget.value];
+          var score1, score2;
+          if (isTop) {
+            score1 = parseInt(e.currentTarget.innerText);
+            score2 = node.score2;
+          } else {
+            score1 = node.score1;
+            score2 = parseInt(e.currentTarget.innerText);
+          }
+
+          submitScore(node.id, score1, score2);
+        }
+      });
+
+
+      return tagScore;
+    }
+
+
+    function createPlayerTag(node, score, isTop, depth, parentNode) {
+      structure.nodes[node.id] = node;
       var tag = document.createElement("li");
       tag.className = isTop ? "game game-top" : "game game-bottom";
       var displayNode = getPlayerName(node)
@@ -176,8 +210,7 @@ var Tournament = function() {
       }
       structure.players[depth].push(displayNode);
 
-      var tagScore = document.createElement("span");
-      tagScore.innerText = score;
+      var tagScore = createTagScore(score, isTop, parentNode);
 
       tag.appendChild(tagScore);
 
@@ -187,14 +220,22 @@ var Tournament = function() {
     /*<li class="game game-top winner">Lousville <span>79</span></li>
 		<li class="game game-spacer">&nbsp;</li>
 		<li class="game game-bottom ">NC A&T <span>48</span></li>*/
-    createPlayerTag(node.contestant1, node.score1, true, depth);
+
+    createPlayerTag(node.contestant1, node.score1, true, depth, node);
 
     var spacer = document.createElement("li");
     spacer.innerHtml = "&nbsp";
 
     structure.rounds[depth].appendChild(spacer);
 
-    createPlayerTag(node.contestant2, node.score2, false, depth);
+    createPlayerTag(node.contestant2, node.score2, false, depth, node);
+  }
+
+  var submitScore = function (nodeId, score1, score2) {
+    Server.Tournament.updateScore(selectedId, nodeId, score1, score2).done(function (result) {
+      tournaments[selectedId] = result;
+      select(selectedId);
+    })
   }
 
   return {
