@@ -3,6 +3,7 @@ package poolsoc.server.controller;
 import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,8 +24,8 @@ public class TournamentController {
 	TournamentService ts = new TournamentService();
 	
 	@RequestMapping(method = RequestMethod.GET, path = "")
-	public String[] getAll() {
-		return ts.getAll();
+	public List<TournamentVM> getAll() {
+		return ts.getAll().map(t -> new TournamentVM(t)).collect(Collectors.toList());
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, path ="{id}")
@@ -47,5 +48,12 @@ public class TournamentController {
 		ts.saveTournament(t);
 		
 		return new TournamentVM(t);
+	}
+	
+	
+	@RequestMapping(method = RequestMethod.GET, path ="{tournamentId}/{nodeId}")
+	public TournamentVM updateScore(@PathVariable String tournamentId, @PathVariable String nodeId, int score1, int score2) throws IOException {
+		ts.updateMatchScore(tournamentId, nodeId, score1, score2);
+		return new TournamentVM(ts.getTournament(tournamentId));
 	}
 }

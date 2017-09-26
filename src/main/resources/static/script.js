@@ -58,6 +58,12 @@ var Server = {
            url: "/api/tournament",
            method: "GET"
         });
+     },
+     updateScore: function (tournamentId, nodeId, score1, score2) {
+       return $.ajax({
+           url: "/api/tournament/" + tournamentId + "/" + nodeId + "?score1=" + score1 + "&score2=" + score2,
+           method: "GET"
+        });
      }
    }
  }

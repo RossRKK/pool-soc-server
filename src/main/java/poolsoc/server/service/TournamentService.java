@@ -2,10 +2,12 @@ package poolsoc.server.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Stream;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -26,18 +28,28 @@ public class TournamentService {
 	 * Get a list of all available tournaments.
 	 * @return The list of all available tournaments
 	 */
-	public String[] getAll() {
+	public Stream<Tournament> getAll() {
 		File dir = new File(PATH);
 		
-		return dir.list();
+		List<String> ids = Arrays.asList(dir.list());
+		//map the 
+		Stream<Tournament> t = ids.parallelStream().map(id ->  getTournament(id));
+		
+		return t;
 	}
 	
 	//get a tournament from its id
-	public Tournament getTournament(String id) throws IOException {
+	public Tournament getTournament(String id) {
 		if (tournaments.containsKey(id)) {
 			return tournaments.get(id);
 		} else {
-			Tournament t = loadTournament(id);
+			Tournament t;
+			try {
+				t = loadTournament(id);
+				
+			} catch (IOException e) {
+				t = null;
+			}
 			tournaments.put(id, t);
 			return t;
 		}
@@ -104,6 +116,7 @@ public class TournamentService {
 		for (int i = 0; i < draw.size(); i++) {
 			players[i] = new Player();
 			players[i].setName(draw.get(i));
+			players[i].generateId();
 		}
 
 		int firstRoundSize = Integer.highestOneBit(players.length);
@@ -120,6 +133,7 @@ public class TournamentService {
 			
 			m.setContestant1(players[i]);
 			m.setContestant2(players[i + 1]);
+			m.generateId();
 			
 			firstRound.add(m);
 		}
@@ -139,6 +153,7 @@ public class TournamentService {
 				
 				m.setContestant1(currentRound.get(i));
 				m.setContestant2(currentRound.get(i + 1));
+				m.generateId();
 				
 				newRound.add(m);
 			}
@@ -157,13 +172,13 @@ public class TournamentService {
 	/**
 	 * Update the score of a match
 	 * @param tournamentId The id of the tournament the match is in
-	 * @param nodeId The id of the node th match is
+	 * @param nodeId The id of the node the match is
 	 * @param score1 The new score 1 (-1 if it shouldn't be changed)
 	 * @param score2 The new score 2 (-1 if it shouldn't be changed)
 	 * @return The updated tournament node
 	 * @throws IOException
 	 */
-	public TournamentNode updateMatchScore(String tournamentId, int nodeId, int score1, int score2) throws IOException {
+	public TournamentNode updateMatchScore(String tournamentId, String nodeId, int score1, int score2) throws IOException {
 		Tournament t = getTournament(tournamentId);
 		TournamentNode match = t.accessNode(nodeId);
 		if (match instanceof Match) {
@@ -173,6 +188,8 @@ public class TournamentService {
 			if (score2 >= 0) {			
 				((Match)match).setScore2(score2);
 			}
+		} else {
+			System.out.println("Error," + nodeId + " (" + match + ") isn't a match in tournament " + tournamentId);
 		}
 		
 		saveTournament(t);

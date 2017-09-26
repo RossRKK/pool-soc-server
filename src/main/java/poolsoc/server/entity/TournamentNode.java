@@ -1,5 +1,6 @@
 package poolsoc.server.entity;
 
+import java.util.HashMap;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -15,13 +16,17 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 )
 public abstract class TournamentNode {
 	
-	public TournamentNode() {
-		this.id = UUID.randomUUID().toString();
-	}
-	
 	private String id;
 	
 	public abstract Player determineContestant();
+	
+	public void indexChildren(HashMap<String, TournamentNode> map) {
+		map.put(this.id, this);
+	}
+	
+	public void generateId() {
+		this.id = UUID.randomUUID().toString();
+	}
 
 	public String getId() {
 		return id;

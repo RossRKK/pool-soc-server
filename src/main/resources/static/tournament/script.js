@@ -26,20 +26,11 @@ var Tournament = function() {
 
   var getAll = function () {
     Server.Tournament.getAll().done(function (results) {
-      results.forEach(id => tournaments[id] = { id: id });
-      loadAll();
+      results.forEach(result => {
+        tournaments[result.id] = result;
+        addToSelector(tournaments[result.id]);
+      });
     });
-  }
-
-  var load = function (id) {
-    Server.Tournament.get(id).done(function (result) {
-      tournaments[id] = result;
-      addToSelector(tournaments[id]);
-    });
-  }
-
-  var loadAll = function () {
-    Object.keys(tournaments).forEach(id => load(id));
   }
 
   var select = function (id) {
@@ -207,7 +198,6 @@ var Tournament = function() {
   }
 
   return {
-    init: init,
-    load: load
+    init: init
   }
 }();

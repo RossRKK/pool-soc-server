@@ -7,10 +7,25 @@ public class Tournament {
 	private String name;
 	private String id;
 	
-	private HashMap<Integer, TournamentNode> allNodes = new HashMap<Integer, TournamentNode>();
+	/**
+	 * A hashmap that contains all nodes in the tournament.
+	 */
+	private HashMap<String, TournamentNode> allNodes = new HashMap<String, TournamentNode>();
 	
-	public TournamentNode accessNode(int nodeId) {
-		return allNodes.get(new Integer(nodeId));
+	private void indexAllNodes() {
+		finalMatch.indexChildren(allNodes);
+	}
+	
+	public TournamentNode accessNode(String nodeId) {
+		return allNodes.get(nodeId);
+	}
+	
+	public void setNode(String nodeId, TournamentNode node) throws IllegalArgumentException {
+		if (allNodes.containsKey(nodeId)) {
+			allNodes.put(nodeId, node);
+		} else {
+			throw new IllegalArgumentException("Invalid node id: " + nodeId);
+		}
 	}
 	
 	/*Getters and Setters*/
@@ -19,6 +34,7 @@ public class Tournament {
 	}
 	public void setFinalMatch(TournamentNode finalMatch) {
 		this.finalMatch = finalMatch;
+		indexAllNodes();
 	}
 	public String getName() {
 		return name;

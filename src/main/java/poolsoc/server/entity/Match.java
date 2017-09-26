@@ -1,6 +1,7 @@
 package poolsoc.server.entity;
 
 import java.util.Date;
+import java.util.HashMap;
 
 public class Match extends TournamentNode {
 	private TournamentNode contestant1;
@@ -25,6 +26,13 @@ public class Match extends TournamentNode {
 		} else {		
 			return null;
 		}
+	}
+	
+	@Override
+	public void indexChildren(HashMap<String, TournamentNode> map) {
+		super.indexChildren(map);
+		contestant1.indexChildren(map);
+		contestant2.indexChildren(map);
 	}
 	
 	/*Getters and Setters*/
