@@ -39,16 +39,65 @@ var Killer = function () {
 
 		$("#players").append("<h3>To Be Drawn: " + current.length + "</h3><table>")
 		current.sort();
+
+		var groupingCount = 0;
+
 		for (var i = 0; i < current.length; i++) {
-			$("#players").append("<tr><td><div class=\"player\">" + current[i] + "</td><td><button class=\"putThrough btn btn-default\" id=\"" + i + "\">Put Through</button><button class=\"currentCross btn btn-default\" id=\"" + i + "\">X</button></div></td></tr>");
+
+			if (i + 1 < current.length && current[i + 1] === current[i]) {
+				groupingCount++;
+			} else if (groupingCount > 0) {
+				var name = current[i];
+
+				//if this string says "flemming" or some variation
+				if (name.match("[Ff]le[mM]*ing")) {
+					name = "Fle" + Array(groupingCount + 2).join("m") + "ing";
+				}
+
+				$("#players").append("<tr><td><div class=\"player\">" + name + " (" + (groupingCount + 1) + ") " + "</td><td><button class=\"putThrough btn btn-default\" id=\"" + i + "\">Put Through</button><button class=\"currentCross btn btn-default\" id=\"" + i + "\">X</button></div></td></tr>");
+				groupingCount = 0;
+			} else {
+				var name = current[i];
+
+				//if this string says "flemming" or some variation
+				if (name.match("[Ff]le[mM]*ing")) {
+					name = "Fleming";
+				}
+
+				$("#players").append("<tr><td><div class=\"player\">" + name + "</td><td><button class=\"putThrough btn btn-default\" id=\"" + i + "\">Put Through</button><button class=\"currentCross btn btn-default\" id=\"" + i + "\">X</button></div></td></tr>");
+			}
 		}
 
 		$("#players").append("</table><h3>Through: " + through.length + "</h3><table>")
 		through.sort();
 
+		groupingCount = 0;
 
 		for (var i = 0; i < through.length; i++) {
-			$("#players").append("<tr><td><div class=\"player\">" + through[i] + "</td><td><button class=\"demote btn btn-default\" id=\"" + i + "\">Demote</button><button class=\"throughCross btn btn-default\" id=\"" + i + "\">X</button></div></td></tr>");
+			//$("#players").append("<tr><td><div class=\"player\">" + through[i] + "</td><td><button class=\"demote btn btn-default\" id=\"" + i + "\">Demote</button><button class=\"throughCross btn btn-default\" id=\"" + i + "\">X</button></div></td></tr>");
+
+			if (i + 1 < through.length && through[i + 1] === through[i]) {
+				groupingCount++;
+			} else if (groupingCount > 0) {
+				var name = through[i];
+
+				//if this string says "flemming" or some variation
+				if (name.match("[Ff]le[mM]*ing")) {
+					name = "Fle" + Array(groupingCount + 2).join("m") + "ing";
+				}
+
+				$("#players").append("<tr><td><div class=\"player\">" + name + " (" + (groupingCount + 1) + ") "  + "</td><td><button class=\"demote btn btn-default\" id=\"" + i + "\">Demote</button><button class=\"throughCross btn btn-default\" id=\"" + i + "\">X</button></div></td></tr>");
+				groupingCount = 0;
+			} else {
+				var name = through[i];
+
+				//if this string says "flemming" or some variation
+				if (name.match("[Ff]le[mM]*ing")) {
+					name = "Fleming";
+				}
+
+				$("#players").append("<tr><td><div class=\"player\">" + name + "</td><td><button class=\"demote btn btn-default\" id=\"" + i + "\">Demote</button><button class=\"throughCross btn btn-default\" id=\"" + i + "\">X</button></div></td></tr>");
+			}
 		}
 
 		$("#players").append("</table>");
