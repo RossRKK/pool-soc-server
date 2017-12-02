@@ -25,6 +25,9 @@ var Router = function () {
         case "#tournaments":
           $("#body").load("tournament/page.html", Tournament.init);
           break;
+        case "#suggestions":
+          $("#body").load("suggestions/index.html", Suggest.init);
+          break;
         //home
         case "#":
         default:
